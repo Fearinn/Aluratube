@@ -21,9 +21,9 @@ function Header() {
     <>
       <div
         style={{
-          backgroundImage: `url("https://images.unsplash.com/photo-1531482615713-2afd69097998?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80")`,
+          backgroundImage: `url("https://images.unsplash.com/photo-1605379399642-870262d3d051?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cHJvZ3JhbW1pbmd8ZW58MHwwfDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60)`,
           backgroundSize: "100%",
-          height: "230px",
+          height: "250px",
           margin: "0 auto",
           width: "100%",
         }}
