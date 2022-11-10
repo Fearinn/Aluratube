@@ -16,7 +16,6 @@ function HomePage() {
       <Head>
         <title>Home - AluraTube</title>
       </Head>
-      <CSSReset />
       <div
         style={{
           display: "flex",
@@ -27,7 +26,7 @@ function HomePage() {
         <SearchContext.Provider value={{search, setSearch}}>
           <Menu />
           <Header />
-          <Timeline playlists={config.playlists} search={search}>
+          <Timeline search={search}>
             Conteúdo
           </Timeline>
         </SearchContext.Provider>

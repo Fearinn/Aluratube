@@ -1,14 +1,14 @@
 import styled from "styled-components";
 import config from "data/config.json";
+import { useRouter } from "next/router";
+import Link from "next/link";
 
 interface ITimeline {
-  playlists: typeof config.playlists;
   search: string;
-  // theme: Object;
   children?: React.ReactNode;
 }
 
-interface IPlaylist {
+export interface IPlaylist {
   jogos: Object[];
   "front-end": Object[];
   "back-end": Object[];
@@ -36,7 +36,7 @@ const StyledTimeline = styled.div`
     width: 100%;
     padding: 16px;
     overflow: hidden;
-    div {
+    .videos {
       width: calc(100vw - 16px * 4);
       display: grid;
       grid-gap: 16px;
@@ -46,7 +46,7 @@ const StyledTimeline = styled.div`
       overflow-x: scroll;
       scroll-snap-type: x mandatory;
       padding-bottom: 1rem;
-        color-scheme: ${({ theme }) => theme.scheme};
+      color-scheme: ${({ theme }) => theme.scheme};
 
       & a {
         scroll-snap-align: start;
@@ -54,14 +54,15 @@ const StyledTimeline = styled.div`
           padding-top: 8px;
           display: block;
           padding-right: 24px;
-          color: ${({ theme }) => theme.textColorBase || "#222222"};
+          color: ${({ theme }) => theme.textColorBase};
         }
       }
     }
   }
 `;
 
-function Timeline({ playlists, search }: ITimeline) {
+function Timeline({ search }: ITimeline) {
+  const playlists = config.playlists;
   const playlistNames = Object.keys(playlists);
   return (
     <StyledTimeline>
@@ -70,19 +71,32 @@ function Timeline({ playlists, search }: ITimeline) {
         return (
           <section key={index}>
             <h2>{playlistName}</h2>
-            <div>
+            <div className="videos">
               {videos
                 .filter((video) => {
                   const normalizedTitle = video.title.toLowerCase();
                   const normalizedSearch = search.toLowerCase();
                   return normalizedTitle.includes(normalizedSearch);
                 })
-                .map((video, key) => {
+                .map((video) => {
+                  const regex = new RegExp("(?<=v=).+");
+                  const videoId = video.url.match(regex);
                   return (
-                    <a href={video.url} key={key}>
-                      <img src={video.thumb} />
-                      <span>{video.title}</span>
-                    </a>
+                    <Link
+                      href={{
+                        pathname: `/video/`,
+                        query: {
+                          id: videoId && videoId[0],
+                          title: video.title
+                        },
+                      }}
+                      key={video.url}
+                    >
+                      <a>
+                        <img src={video.thumb} />
+                        <span>{video.title}</span>
+                      </a>
+                    </Link>
                   );
                 })}
             </div>
