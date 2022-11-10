@@ -1,7 +1,8 @@
-import styled from "styled-components";
+
+import styledComponent from "styled-components"
 import config from "data/config.json"
 
-const StyledHeader = styled.div`
+const StyledHeader = styledComponent.div`
   img {
     width: 80px;
     height: 80px;

@@ -5,6 +5,7 @@ const StyledFavorites = styled.div`
   padding: 0 1rem 0.5rem 1rem;
 
   h1 {
+    font-size: 1.5rem;
     padding: 1rem 0;
   }
 
@@ -14,7 +15,8 @@ const StyledFavorites = styled.div`
     gap: 0.5rem;
     align-items: center;
     h2 {
-      color: black;
+      font-size: 1rem;
+      color: ${({theme}) => theme.textColorBase};
     }
     img {
       width: 120px;

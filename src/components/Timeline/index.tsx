@@ -1,9 +1,10 @@
 import styled from "styled-components";
-import config from "data/config.json"
+import config from "data/config.json";
 
 interface ITimeline {
   playlists: typeof config.playlists;
   search: string;
+  // theme: Object;
   children?: React.ReactNode;
 }
 
@@ -12,7 +13,6 @@ interface IPlaylist {
   "front-end": Object[];
   "back-end": Object[];
 }
-
 
 const StyledTimeline = styled.div`
   flex: 1;
@@ -58,7 +58,7 @@ const StyledTimeline = styled.div`
   }
 `;
 
-function Timeline({ playlists, search }: ITimeline) {
+function Timeline({ playlists, search}: ITimeline) {
   const playlistNames = Object.keys(playlists);
   return (
     <StyledTimeline>
@@ -90,4 +90,4 @@ function Timeline({ playlists, search }: ITimeline) {
   );
 }
 
-export default Timeline
+export default Timeline;
