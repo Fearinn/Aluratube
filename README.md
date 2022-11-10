@@ -24,5 +24,7 @@ It's a video platform inspired by YouTube.
 - [NextJS](https://nextjs.org/) (12.3.1)
 - [Styled Components](https://styled-components.com/) (5.3.6)
 - [TypeScript](https://www.typescriptlang.org/) (4.8.4)
+- [ContextAPI](https://reactjs.org/docs/context.html)
+- [Material UI](https://mui.com/) (5.10.13)
 
 
