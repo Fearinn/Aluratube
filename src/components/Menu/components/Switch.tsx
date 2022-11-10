@@ -52,14 +52,13 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 
 function DarkModeSwitch() {
   const [checked, setChecked] = useState(false);
-  const [theme, setTheme] = useContext(ColorModeContext);
+  const {theme, setTheme} = useContext(ColorModeContext);
 
   return (
     <MaterialUISwitch
       checked={checked}
       onClick={() => {
         setChecked(!checked);
-        /*  @ts-ignore */
         theme === "light" ? setTheme("dark") : setTheme("light");
       }}
       inputProps={{ "aria-label": "controlled" }}

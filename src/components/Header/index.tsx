@@ -1,8 +1,7 @@
+import styled from "styled-components";
+import config from "data/config.json";
 
-import styledComponent from "styled-components"
-import config from "data/config.json"
-
-const StyledHeader = styledComponent.div`
+const StyledHeader = styled.div`
   img {
     width: 80px;
     height: 80px;
@@ -24,7 +23,8 @@ function Header() {
         style={{
           backgroundImage: `url(${config.bg})`,
           backgroundSize: "100%",
-          height: "300px",
+          backgroundRepeat: "no-repeat",
+          height: "230px",
           margin: "0 auto",
           width: "100%",
         }}
@@ -42,4 +42,4 @@ function Header() {
   );
 }
 
-export default Header
+export default Header;

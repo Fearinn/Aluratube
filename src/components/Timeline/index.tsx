@@ -45,7 +45,10 @@ const StyledTimeline = styled.div`
       grid-auto-columns: minmax(200px, 1fr);
       overflow-x: scroll;
       scroll-snap-type: x mandatory;
-      a {
+      padding-bottom: 1rem;
+        color-scheme: ${({ theme }) => theme.scheme};
+
+      & a {
         scroll-snap-align: start;
         span {
           padding-top: 8px;
@@ -58,7 +61,7 @@ const StyledTimeline = styled.div`
   }
 `;
 
-function Timeline({ playlists, search}: ITimeline) {
+function Timeline({ playlists, search }: ITimeline) {
   const playlistNames = Object.keys(playlists);
   return (
     <StyledTimeline>

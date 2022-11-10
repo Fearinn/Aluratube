@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Searcher, { ISearcher } from "./components/Searcher";
+import Searcher from "./components/Searcher";
 import DarkModeSwitch from "./components/Switch";
 
 const StyledMenu = styled.header`
@@ -14,6 +14,7 @@ const StyledMenu = styled.header`
   gap: 16px;
   position: fixed;
   width: 100%;
+  transition: all 0.3s linear;
   .logo {
     width: 100%;
     max-width: 80px;
@@ -77,17 +78,17 @@ function Logo() {
   );
 }
 
-function Menu({ search, setSearch }: ISearcher) {
+function Menu() {
   return (
-    <StyledMenu>
-      <div>
-        <Logo />
-      </div>
-      <div className="menu-tools">
-        <Searcher search={search} setSearch={setSearch} />
-        <DarkModeSwitch />
-      </div>
-    </StyledMenu>
+      <StyledMenu>
+        <div>
+          <Logo />
+        </div>
+        <div className="menu-tools">
+          <Searcher />
+          <DarkModeSwitch />
+        </div>
+      </StyledMenu>
   );
 }
 

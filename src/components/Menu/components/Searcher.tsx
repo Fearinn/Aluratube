@@ -1,4 +1,5 @@
-import { SetStateAction } from "react";
+import React, { ReactNode, SetStateAction, useContext } from "react";
+import SearchContext from "SearchContext";
 import styled from "styled-components";
 
 const StyledSearcher = styled.div`
@@ -46,12 +47,9 @@ const StyledSearcher = styled.div`
   }
 `;
 
-export interface ISearcher {
-  search: string;
-  setSearch: React.Dispatch<SetStateAction<string>>;
-}
 
-function Searcher({ search, setSearch }: ISearcher) {
+function Searcher() {
+  const {search, setSearch} = useContext(SearchContext)
   return (
     <StyledSearcher>
       <label aria-label="Buscar" htmlFor="searcher">
