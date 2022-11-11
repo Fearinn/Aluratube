@@ -1,7 +1,7 @@
 
 # AluraTube
 
-Project devoloped during the event **Imersão React 5**, from [Alura](https://www.alura.com.br). 
+Project developed during the event **Imersão React 5**, from [Alura](https://www.alura.com.br). 
 It's a video platform inspired by YouTube.
 
 
@@ -15,6 +15,7 @@ It's a video platform inspired by YouTube.
 ## Functionalities
 
 - List filter with search bar
+- Form to add new videos, with validation and thumbnail preview
 - Dark mode
 
 
