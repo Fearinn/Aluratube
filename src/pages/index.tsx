@@ -1,12 +1,10 @@
-import config from "data/config.json";
-import { CSSReset } from "components/CSSreset";
 import Menu from "components/Menu/index";
 import Timeline from "components/Timeline";
 import React, { useState } from "react";
 import Header from "components/Header";
 import Favorites from "components/Favorites";
 import Head from "next/head";
-import SearchContext from "SearchContext";
+import SearchContext from "providers/SearchContext";
 
 function HomePage() {
   const [search, setSearch] = useState("");
@@ -24,7 +22,6 @@ function HomePage() {
         }}
       >
         <SearchContext.Provider value={{search, setSearch}}>
-          <Menu />
           <Header />
           <Timeline search={search}>
             Conteúdo

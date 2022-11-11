@@ -1,37 +1,8 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import styled from "styled-components";
 import Searcher from "./components/Searcher";
 import DarkModeSwitch from "./components/Switch";
-
-const StyledMenu = styled.header`
-  display: flex;
-  flex-direction: row;
-  height: 56px;
-  justify-content: space-between;
-  background-color: ${({ theme }) => theme.backgroundLevel1};
-  align-items: center;
-  padding: 0 16px;
-  gap: 16px;
-  position: fixed;
-  width: 100%;
-  transition: all 0.3s linear;
-  z-index: 1;
-  .logo {
-    width: 100%;
-    max-width: 80px;
-    @media (min-width: 600px) {
-      max-width: 127px;
-    }
-    .text {
-      fill: ${({ theme }) => theme.textColorBase};
-    }
-  }
-  .menu-tools {
-    display: flex;
-    gap: 1rem;
-  }
-`;
+import StyledMenu from "./styles"
 
 function Logo() {
   return (
@@ -81,8 +52,8 @@ function Logo() {
 }
 
 function Menu() {
-  const router = useRouter()
-  
+  const router = useRouter();
+
   return (
     <StyledMenu>
       <div>
@@ -93,7 +64,7 @@ function Menu() {
         </Link>
       </div>
       <div className="menu-tools">
-      {!router.query.id && <Searcher />}
+        {!router.query.id && <Searcher />}
         <DarkModeSwitch />
       </div>
     </StyledMenu>

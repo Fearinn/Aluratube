@@ -2,10 +2,11 @@ import { AppProps } from "next/app";
 import React, { useState } from "react";
 import { ThemeProvider } from "styled-components";
 import { lightTheme, darkTheme, GlobalStyles } from "data/themeConfig";
-import ColorMode from "ColorModeContext";
+import ColorMode from "providers/ColorModeContext";
 import Head from "next/head";
 import Menu from "components/Menu";
-import { CSSReset } from "components/CSSreset";
+import { CSSReset } from "providers/CSSreset";
+import VideoRegister from "components/VideoRegister";
 
 function App({ Component, pageProps }: AppProps) {
   const [theme, setTheme] = useState("light");
@@ -24,6 +25,7 @@ function App({ Component, pageProps }: AppProps) {
           <GlobalStyles />
           <Menu />
           <Component {...pageProps} />
+          <VideoRegister/>
         </ThemeProvider>
       </ColorMode.Provider>
     </>

@@ -1,6 +1,6 @@
 import { Switch } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import ColorModeContext from "ColorModeContext";
+import ColorModeContext from "providers/ColorModeContext";
 import {useContext, useState } from "react";
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
