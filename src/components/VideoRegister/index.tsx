@@ -1,8 +1,16 @@
 import { useState } from "react";
 import StyledRegisterVideo from "components/VideoRegister/styles";
 import getIdFromURL from "utils/getIdFromURL";
+import { createClient } from "@supabase/supabase-js";
 
-const useRegisterVideoForm = <T,>(initialValues: T) => {
+const PROJECT_URL = "https://szaruafpiauzxitymguy.supabase.co";
+const PUBLIC_KEY =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN6YXJ1YWZwaWF1enhpdHltZ3V5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2NjgyMjE4NDgsImV4cCI6MTk4Mzc5Nzg0OH0.t0Bfs0pKt2LtGwQb5BE9AB7OoK8hWkdsNs5wqvzHSak";
+const supabase = createClient(PROJECT_URL, PUBLIC_KEY);
+
+console.log(supabase);
+
+const useForm = <T,>(initialValues: T) => {
   const [values, setValues] = useState(initialValues);
 
   const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -12,15 +20,14 @@ const useRegisterVideoForm = <T,>(initialValues: T) => {
     });
   };
 
-  const submitForm = (event: React.FormEvent) => {
-    event.preventDefault();
+  const resetForm = () => {
     setValues(initialValues);
   };
 
   return {
     values,
     changeHandler,
-    submitForm,
+    resetForm,
   };
 };
 
@@ -28,7 +35,7 @@ function VideoRegister() {
   const [open, setOpen] = useState(false);
   const initialValues = { title: "", url: "" };
 
-  const registerForm = useRegisterVideoForm(initialValues);
+  const registerForm = useForm(initialValues);
   return (
     <>
       <StyledRegisterVideo>
@@ -36,7 +43,24 @@ function VideoRegister() {
           <>
             <form
               aria-labelledby="legend"
-              onSubmit={(event) => registerForm.submitForm(event)}
+              onSubmit={async (event) => {
+                event.preventDefault();
+                try {
+                  await supabase.from("video").insert({
+                    playlist: "jogos",
+                    title: registerForm.values.title,
+                    url: registerForm.values.url,
+                    thumb: `https://img.youtube.com/vi/${getIdFromURL(
+                      registerForm.values.url
+                    )}/hqdefault.jpg`,
+                  });
+                } catch (e) {
+                  console.log(e);
+                }
+
+                registerForm.resetForm();
+                setOpen(false);
+              }}
             >
               <div>
                 <button

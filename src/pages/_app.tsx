@@ -7,9 +7,11 @@ import Head from "next/head";
 import Menu from "components/Menu";
 import { CSSReset } from "providers/CSSreset";
 import VideoRegister from "components/VideoRegister";
+import SearchContext from "providers/SearchContext";
 
 function App({ Component, pageProps }: AppProps) {
   const [theme, setTheme] = useState("light");
+  const [search, setSearch] = useState("");
   return (
     <>
       <Head>
@@ -23,8 +25,10 @@ function App({ Component, pageProps }: AppProps) {
         <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
           <CSSReset />
           <GlobalStyles />
+          <SearchContext.Provider value={{search, setSearch}}>
           <Menu />
           <Component {...pageProps} />
+          </SearchContext.Provider>
           <VideoRegister/>
         </ThemeProvider>
       </ColorMode.Provider>

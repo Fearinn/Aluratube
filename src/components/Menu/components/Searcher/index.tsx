@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 import SearchContext from "providers/SearchContext";
-import StyledSearcher from "./styles"
+import StyledSearcher from "./styles";
 
 function Searcher() {
-  const {search, setSearch} = useContext(SearchContext)
+  const { search, setSearch } = useContext(SearchContext);
   return (
     <StyledSearcher>
       <label aria-label="Buscar" htmlFor="searcher">
@@ -14,7 +14,10 @@ function Searcher() {
         id="searcher"
         type="search"
         value={search}
-        onChange={(event) => setSearch(event.target.value)}
+        onChange={(event) => {
+          setSearch(event.target.value)
+          console.log(search + "testando");
+        }}
       ></input>
     </StyledSearcher>
   );
