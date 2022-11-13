@@ -33,6 +33,7 @@ const StyledRegisterVideo = styled.div`
     border-radius: 2px;
     cursor: pointer;
     color: inherit;
+    margin-bottom: 0.5rem;
   }
   form {
     width: 100%;
@@ -77,9 +78,15 @@ const StyledRegisterVideo = styled.div`
       background-color: ${({ theme }) => theme.backgroundBase};
       width: 100%;
     }
+    .playlist-label {
+      color: ${({ theme }) => theme.textColorBase};
+      opacity: 0.65;
+    }
+    .playlist-select {
+      background-color: ${({ theme }) => theme.backgroundBase};
+    }
   }
   img {
-    margin-top: 1rem;
     aspect-ratio: 16/9;
     font-weight: 500;
     object-fit: cover;

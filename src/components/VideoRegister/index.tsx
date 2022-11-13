@@ -1,14 +1,13 @@
 import { useState } from "react";
 import StyledRegisterVideo from "components/VideoRegister/styles";
 import getIdFromURL from "utils/getIdFromURL";
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { createClient } from "@supabase/supabase-js";
 
 const PROJECT_URL = "https://szaruafpiauzxitymguy.supabase.co";
 const PUBLIC_KEY =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN6YXJ1YWZwaWF1enhpdHltZ3V5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2NjgyMjE4NDgsImV4cCI6MTk4Mzc5Nzg0OH0.t0Bfs0pKt2LtGwQb5BE9AB7OoK8hWkdsNs5wqvzHSak";
 const supabase = createClient(PROJECT_URL, PUBLIC_KEY);
-
-console.log(supabase);
 
 const useForm = <T,>(initialValues: T) => {
   const [values, setValues] = useState(initialValues);
@@ -33,7 +32,7 @@ const useForm = <T,>(initialValues: T) => {
 
 function VideoRegister() {
   const [open, setOpen] = useState(false);
-  const initialValues = { title: "", url: "" };
+  const initialValues = { title: "", url: "", playlist: "" };
 
   const registerForm = useForm(initialValues);
   return (
@@ -47,7 +46,7 @@ function VideoRegister() {
                 event.preventDefault();
                 try {
                   await supabase.from("video").insert({
-                    playlist: "jogos",
+                    playlist: registerForm.values.playlist,
                     title: registerForm.values.title,
                     url: registerForm.values.url,
                     thumb: `https://img.youtube.com/vi/${getIdFromURL(
@@ -55,7 +54,7 @@ function VideoRegister() {
                     )}/hqdefault.jpg`,
                   });
                 } catch (e) {
-                  console.log(e);
+                  alert("Houve um problema ao cadastrar o vídeo:" + e);
                 }
 
                 registerForm.resetForm();
@@ -79,8 +78,9 @@ function VideoRegister() {
                     value={registerForm.values.title}
                     required
                   />
+
                   <input
-                    pattern={`(?:http(?:s)?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:(?:watch)?\?(?:.*&)?v(?:i)?=|(?:embed|v|vi|user)\/))([^\?&\"'<> #]{11})`}
+                  pattern="((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-_]{11})(\S+)?"
                     title="Uma URL válida contém determinada estrutura e um id com 11 caracteres"
                     placeholder="URL"
                     name="url"
@@ -88,6 +88,24 @@ function VideoRegister() {
                     value={registerForm.values.url}
                     required
                   />
+                  <FormControl fullWidth sx={{ marginBottom: "0.5rem" }}>
+                    <InputLabel className="playlist-label">Playlist</InputLabel>
+                    <Select
+                      variant="outlined"
+                      className="playlist-select"
+                      required
+                      name="playlist"
+                      value={registerForm.values.playlist}
+                      /* @ts-ignore */
+                      onChange={registerForm.changeHandler}
+                      label="Playlist"
+                    >
+                      <MenuItem value="jogos">Jogos</MenuItem>
+                      <MenuItem value="jecnologia">Tecnologia</MenuItem>
+                      <MenuItem value="esportes">Esportes</MenuItem>
+                      <MenuItem value="outro">Outro</MenuItem>
+                    </Select>
+                  </FormControl>
                 </fieldset>
                 <button type="submit">Cadastrar</button>
                 {getIdFromURL(registerForm.values.url)?.length === 11 && (

@@ -16,7 +16,6 @@ function Searcher() {
         value={search}
         onChange={(event) => {
           setSearch(event.target.value)
-          console.log(search + "testando");
         }}
       ></input>
     </StyledSearcher>

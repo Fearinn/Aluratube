@@ -24,7 +24,6 @@ const StyledVideo = styled.section`
 
 function Video() {
   const router = useRouter();
-  console.log(router.query);
 
   return (
     <>

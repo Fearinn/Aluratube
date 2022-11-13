@@ -12,7 +12,8 @@ interface IVideo {
   title: string;
   url: string;
   playlist: string;
-  thumb: string
+  thumb: string;
+  id: number;
 }
 
 function Timeline({ search, playlists }: ITimeline) {
@@ -22,6 +23,7 @@ function Timeline({ search, playlists }: ITimeline) {
       {playlistNames.map((playlistName, index) => {
         /*  @ts-ignore */
         const videos = playlists[playlistName];
+        let countVideos = 0
         return (
           <section key={index}>
             <h2>{playlistName}</h2>
@@ -30,32 +32,29 @@ function Timeline({ search, playlists }: ITimeline) {
                 .filter((video: IVideo) => {
                   const normalizedTitle = video.title.toLowerCase();
                   const normalizedSearch = search.toLowerCase();
-
                   return normalizedTitle.includes(normalizedSearch);
                 })
                 .map((video: IVideo) => {
+                  countVideos += 1
                   return (
                     <Link
                       href={{
                         pathname: `/video/`,
                         query: {
                           id: getIdFromURL(video.url),
-                          title: video.title,
+                          title: video.title.toUpperCase(),
                         },
                       }}
-                      key={video.url}
+                      key={video.id}
                     >
                       <a>
-                        <img
-                          src={
-                            video.thumb
-                          }
-                        />
-                        <span>{video.title}</span>
+                        <img src={video.thumb} />
+                        <span>{video.title.toUpperCase()}</span>
                       </a>
-                    </Link>
+                    </Link> 
                   );
                 })}
+                 {!countVideos && "Nenhum vídeo foi encontrado"}
             </div>
           </section>
         );
