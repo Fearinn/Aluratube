@@ -15,7 +15,7 @@ function Timeline({ search, playlists }: ITimeline) {
         id={router.query.playlist as string}
         key={router.query.playlist as string}
       >
-        <h2>{`Outros vídeos de ${router.query.playlist}`}</h2>
+        <h2>{`Mais vídeos da playlist "${router.query.playlist}"`}</h2>
         <div className="videos">
           {videos?.map((video: IVideo) => {
             return (
