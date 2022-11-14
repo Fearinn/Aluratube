@@ -28,12 +28,12 @@ flex-direction: column;
 
   section {
     width: 100%;
-    padding: 16px;
+    padding: 16px 4px;
     overflow: hidden;
     background-color: ${({theme}) => theme.backgroundLevel1};
     transition: all 0.3s linear;
     .videos {
-      width: calc(100vw - 16px * 4);
+      width: calc(100vw);
       display: grid;
       grid-gap: 16px;
       grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
