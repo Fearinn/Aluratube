@@ -103,7 +103,7 @@ function VideoRegister() {
                       <MenuItem value="jogos">Jogos</MenuItem>
                       <MenuItem value="jecnologia">Tecnologia</MenuItem>
                       <MenuItem value="esportes">Esportes</MenuItem>
-                      <MenuItem value="outro">Outro</MenuItem>
+                      <MenuItem value="outros">outros</MenuItem>
                     </Select>
                   </FormControl>
                 </fieldset>

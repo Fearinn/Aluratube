@@ -84,6 +84,7 @@ const StyledRegisterVideo = styled.div`
     }
     .playlist-select {
       background-color: ${({ theme }) => theme.backgroundBase};
+      color: ${({ theme }) => theme.textColorBase};
     }
   }
   img {

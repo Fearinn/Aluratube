@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
 const StyledTimeline = styled.div`
+display: flex;
+flex-direction: column;
   flex: 1;
   width: 100%;
   padding: 0 8px;
@@ -18,6 +20,10 @@ const StyledTimeline = styled.div`
     max-width: 210px;
     height: auto;
   }
+   #outros {
+    order: 1;
+  }
+
   section {
     width: 100%;
     padding: 16px;
@@ -47,4 +53,4 @@ const StyledTimeline = styled.div`
   }
 `;
 
-export default StyledTimeline
+export default StyledTimeline;

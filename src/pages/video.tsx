@@ -2,6 +2,8 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import config from "data/config.json";
 import styled from "styled-components";
+import Timeline from "components/Timeline";
+import { useState } from "react";
 
 const StyledVideo = styled.section`
   display: flex;
@@ -24,7 +26,7 @@ const StyledVideo = styled.section`
 
 function Video() {
   const router = useRouter();
-
+  const playlists = useState({})
   return (
     <>
       <Head>
@@ -41,6 +43,7 @@ function Video() {
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
         ></iframe>
+        <Timeline playlists={playlists}></Timeline>
       </StyledVideo>
     </>
   );
