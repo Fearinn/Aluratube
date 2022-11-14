@@ -7,7 +7,7 @@ import SearchContext from "providers/SearchContext";
 import videoService from "services/video";
 
 
-interface IPlaylists {
+export interface IPlaylists {
   jogos?: IVideo[];
   tecnologia?: IVideo[];
   esportes?: IVideo[];

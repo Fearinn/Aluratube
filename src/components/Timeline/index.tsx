@@ -1,10 +1,11 @@
 import Link from "next/link";
+import { IPlaylists } from "pages";
 import getIdFromURL from "utils/getIdFromURL";
 import StyledTimeline from "./styles";
 
 interface ITimeline {
   search?: string;
-  playlists: Object;
+  playlists: IPlaylists;
   children?: React.ReactNode;
 }
 
@@ -17,29 +18,27 @@ interface IVideo {
 }
 
 function Timeline({ search, playlists }: ITimeline) {
-  const playlistNames = Object.keys(playlists)
+  const playlistNames = Object.keys(playlists);
   return (
     <StyledTimeline>
       {playlistNames.map((playlistName) => {
-        /*  @ts-ignore */
-        const videos = playlists[playlistName];
-        let countVideos = 0
+        const videos = playlists[playlistName as keyof typeof playlists];
+        let countVideos = 0;
         return (
           <section id={playlistName} key={playlistName}>
             <h2>{playlistName}</h2>
             <div className="videos">
-              {videos
-                .filter((video: IVideo) => {
+              {videos?.filter((video: IVideo) => {
                   const normalizedTitle = video.title.toLowerCase();
                   if (search) {
-                  const normalizedSearch = search.toLowerCase();
-                  return normalizedTitle.includes(normalizedSearch);
+                    const normalizedSearch = search.toLowerCase();
+                    return normalizedTitle.includes(normalizedSearch);
                   } else {
-                    return true
+                    return true;
                   }
                 })
                 .map((video: IVideo) => {
-                  countVideos += 1
+                  countVideos += 1;
                   return (
                     <Link
                       href={{
@@ -47,7 +46,7 @@ function Timeline({ search, playlists }: ITimeline) {
                         query: {
                           id: getIdFromURL(video.url),
                           title: video.title.toUpperCase(),
-                          playlist: video.playlist
+                          playlist: video.playlist,
                         },
                       }}
                       key={video.id}
@@ -56,10 +55,10 @@ function Timeline({ search, playlists }: ITimeline) {
                         <img src={video.thumb} />
                         <span>{video.title.toUpperCase()}</span>
                       </a>
-                    </Link> 
+                    </Link>
                   );
                 })}
-                 {!countVideos && "Nenhum vídeo foi encontrado"}
+              {!countVideos && "Nenhum vídeo foi encontrado"}
             </div>
           </section>
         );
@@ -69,4 +68,3 @@ function Timeline({ search, playlists }: ITimeline) {
 }
 
 export default Timeline;
-
