@@ -31,6 +31,7 @@ flex-direction: column;
     padding: 16px;
     overflow: hidden;
     background-color: ${({theme}) => theme.backgroundLevel1};
+    transition: all 0.3s linear;
     .videos {
       width: calc(100vw - 16px * 4);
       display: grid;
