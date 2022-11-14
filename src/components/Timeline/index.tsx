@@ -1,68 +1,95 @@
+import { IPlaylists, ITimeline, IVideo } from "interfaces/timeline";
 import Link from "next/link";
-import { IPlaylists } from "pages";
+import { useRouter } from "next/router";
 import getIdFromURL from "utils/getIdFromURL";
 import StyledTimeline from "./styles";
 
-interface ITimeline {
-  search?: string;
-  playlists: IPlaylists;
-  children?: React.ReactNode;
-}
-
-interface IVideo {
-  title: string;
-  url: string;
-  playlist: string;
-  thumb: string;
-  id: number;
-}
-
 function Timeline({ search, playlists }: ITimeline) {
   const playlistNames = Object.keys(playlists);
+  const router = useRouter();
+
+  function renderSinglePlaylist() {
+    const videos = playlists[router.query.playlist as keyof IPlaylists];
+    return (
+      <section
+        id={router.query.playlist as string}
+        key={router.query.playlist as string}
+      >
+        <h2>{`Outros vídeos de ${router.query.playlist}`}</h2>
+        <div className="videos">
+          {videos?.map((video: IVideo) => {
+            return (
+              <Link
+                href={{
+                  pathname: `/video/`,
+                  query: {
+                    id: getIdFromURL(video.url),
+                    title: video.title.toUpperCase(),
+                    playlist: video.playlist
+                  },
+                }}
+                key={video.id}
+              >
+                <a>
+                  <img src={video.thumb} />
+                  <span>{video.title.toUpperCase()}</span>
+                </a>
+              </Link>
+            );
+          })}
+        </div>
+      </section>
+    );
+  }
   return (
     <StyledTimeline>
-      {playlistNames.map((playlistName) => {
-        const videos = playlists[playlistName as keyof typeof playlists];
-        let countVideos = 0;
-        return (
-          <section id={playlistName} key={playlistName}>
-            <h2>{playlistName}</h2>
-            <div className="videos">
-              {videos?.filter((video: IVideo) => {
-                  const normalizedTitle = video.title.toLowerCase();
-                  if (search) {
-                    const normalizedSearch = search.toLowerCase();
-                    return normalizedTitle.includes(normalizedSearch);
-                  } else {
-                    return true;
-                  }
-                })
-                .map((video: IVideo) => {
-                  countVideos += 1;
-                  return (
-                    <Link
-                      href={{
-                        pathname: `/video/`,
-                        query: {
-                          id: getIdFromURL(video.url),
-                          title: video.title.toUpperCase(),
-                          playlist: video.playlist,
-                        },
-                      }}
-                      key={video.id}
-                    >
-                      <a>
-                        <img src={video.thumb} />
-                        <span>{video.title.toUpperCase()}</span>
-                      </a>
-                    </Link>
-                  );
-                })}
-              {!countVideos && "Nenhum vídeo foi encontrado"}
-            </div>
-          </section>
-        );
-      })}
+      {!router.query.playlist
+        ? playlistNames.map((playlistName) => {
+            let countVideos = 0;
+
+            const videos = playlists[playlistName as keyof IPlaylists];
+
+            return (
+              <section id={playlistName} key={playlistName}>
+                <h2>{playlistName}</h2>
+                <div className="videos">
+                  {videos
+                    ?.filter((video: IVideo) => {
+                      const normalizedTitle = video.title.toLowerCase();
+                      if (search) {
+                        const normalizedSearch = search.toLowerCase();
+                        return normalizedTitle.includes(normalizedSearch);
+                      } else {
+                        return true;
+                      }
+                    })
+                    .map((video: IVideo) => {
+                      countVideos += 1;
+                      return (
+                        <Link
+                          href={{
+                            pathname: `/video/`,
+                            query: {
+                              id: getIdFromURL(video.url),
+                              title: video.title.toUpperCase(),
+                              playlist: video.playlist,
+                            },
+                          }}
+                          key={video.id}
+                        >
+                          <a>
+                            <img src={video.thumb} />
+                            <span>{video.title.toUpperCase()}</span>
+                          </a>
+                        </Link>
+                      );
+                    })}
+                  {!countVideos && "Nenhum vídeo foi encontrado"}
+                </div>
+              </section>
+            );
+          })
+        : renderSinglePlaylist()}
     </StyledTimeline>
   );
 }

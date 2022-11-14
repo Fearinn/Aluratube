@@ -10,7 +10,9 @@ flex-direction: column;
   h2 {
     font-size: 16px;
     margin-bottom: 16px;
-    text-transform: capitalize;
+    &::first-letter {
+      text-transform: capitalize;
+    }
   }
   img {
     aspect-ratio: 16/9;
@@ -28,6 +30,7 @@ flex-direction: column;
     width: 100%;
     padding: 16px;
     overflow: hidden;
+    background-color: ${({theme}) => theme.backgroundLevel1};
     .videos {
       width: calc(100vw - 16px * 4);
       display: grid;

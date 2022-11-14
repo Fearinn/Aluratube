@@ -8,10 +8,13 @@ import Menu from "components/Menu";
 import { CSSReset } from "providers/CSSreset";
 import VideoRegister from "components/VideoRegister";
 import SearchContext from "providers/SearchContext";
+import PlaylistsContext from "providers/PlaylistsContext";
+import { IPlaylists } from "interfaces/timeline";
 
 function App({ Component, pageProps }: AppProps) {
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState("dark");
   const [search, setSearch] = useState("");
+  const [playlists, setPlaylists] = useState<IPlaylists>({});
   return (
     <>
       <Head>
@@ -25,11 +28,13 @@ function App({ Component, pageProps }: AppProps) {
         <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
           <CSSReset />
           <GlobalStyles />
-          <SearchContext.Provider value={{search, setSearch}}>
-          <Menu />
-          <Component {...pageProps} />
-          </SearchContext.Provider>
-          <VideoRegister/>
+          <PlaylistsContext.Provider value={{ playlists, setPlaylists }}>
+            <SearchContext.Provider value={{ search, setSearch }}>
+              <Menu />
+              <Component {...pageProps} />
+            </SearchContext.Provider>
+          </PlaylistsContext.Provider>
+          <VideoRegister />
         </ThemeProvider>
       </ColorMode.Provider>
     </>
