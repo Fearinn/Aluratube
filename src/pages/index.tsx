@@ -73,9 +73,7 @@ function HomePage() {
         }}
       >
         <Header />
-        <Timeline playlists={playlists} search={search}>
-          Conteúdo
-        </Timeline>
+        <Timeline playlists={playlists} search={search}></Timeline>
 
         <Favorites />
       </div>

@@ -17,26 +17,28 @@ function Timeline({ search, playlists }: ITimeline) {
       >
         <h2>{`Mais vídeos da playlist "${router.query.playlist}"`}</h2>
         <div className="videos">
-          {videos?.map((video: IVideo) => {
-            return (
-              <Link
-                href={{
-                  pathname: `/video/`,
-                  query: {
-                    id: getIdFromURL(video.url),
-                    title: video.title.toUpperCase(),
-                    playlist: video.playlist
-                  },
-                }}
-                key={video.id}
-              >
-                <a>
-                  <img src={video.thumb} />
-                  <span>{video.title.toUpperCase()}</span>
-                </a>
-              </Link>
-            );
-          })}
+          {videos
+            ?.filter((video) => getIdFromURL(video.url) !== router.query.id)
+            .map((video: IVideo) => {
+              return (
+                <Link
+                  href={{
+                    pathname: `/video/`,
+                    query: {
+                      id: getIdFromURL(video.url),
+                      title: video.title.toUpperCase(),
+                      playlist: video.playlist,
+                    },
+                  }}
+                  key={video.id}
+                >
+                  <a>
+                    <img src={video.thumb} alt="" />
+                    <span>{video.title.toUpperCase()}</span>
+                  </a>
+                </Link>
+              );
+            })}
         </div>
       </section>
     );
