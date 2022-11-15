@@ -1,13 +1,66 @@
+import { createClient } from "@supabase/supabase-js";
 import { IPlaylists, ITimeline, IVideo } from "interfaces/timeline";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { possiblePlaylists } from "pages";
+import PlaylistsContext from "providers/PlaylistsContext";
+import { useContext, useEffect } from "react";
+import videoService from "services/video";
 import getIdFromURL from "utils/getIdFromURL";
 import StyledTimeline from "./styles";
 
-function Timeline({ search, playlists }: ITimeline) {
+const PROJECT_URL = "https://szaruafpiauzxitymguy.supabase.co";
+const PUBLIC_KEY =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN6YXJ1YWZwaWF1enhpdHltZ3V5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2NjgyMjE4NDgsImV4cCI6MTk4Mzc5Nzg0OH0.t0Bfs0pKt2LtGwQb5BE9AB7OoK8hWkdsNs5wqvzHSak";
+const supabase = createClient(PROJECT_URL, PUBLIC_KEY);
+
+export const possiblePlaylists = ["jogos", "esportes", "tecnologia", "outros"];
+
+const service = videoService();
+
+function Timeline({ search }: ITimeline) {
+  const { playlists, setPlaylists } = useContext(PlaylistsContext);
   const playlistNames = Object.keys(playlists);
   const router = useRouter();
+
+  function updateVideos() {
+    service.getAllVideos().then((resposta) => {
+      const novasPlaylists = {} as IPlaylists;
+
+      resposta.data?.forEach((video) => {
+        const playlist = video.playlist as keyof IPlaylists;
+
+        if (!novasPlaylists[playlist] && possiblePlaylists.includes(playlist)) {
+          novasPlaylists[playlist] = [];
+          novasPlaylists[playlist] = [
+            video,
+            ...(novasPlaylists[playlist] as IVideo[]),
+          ];
+        } else if (!novasPlaylists[playlist] && novasPlaylists["outros"]) {
+          novasPlaylists["outros"] = [
+            video,
+            ...(novasPlaylists["outros"] as IVideo[]),
+          ];
+        } else if (novasPlaylists[playlist]) {
+          novasPlaylists[playlist] = [
+            video,
+            ...(novasPlaylists[playlist] as IVideo[]),
+          ];
+        }
+      });
+      setPlaylists(novasPlaylists);
+    });
+  }
+
+  useEffect(() => {
+    supabase
+      .from("video")
+      .on("*", () => updateVideos())
+      .subscribe();
+  }, []);
+
+  useEffect(() => {
+    updateVideos();
+  }, []);
 
   function renderSinglePlaylist() {
     const videos = playlists[router.query.playlist as keyof IPlaylists];

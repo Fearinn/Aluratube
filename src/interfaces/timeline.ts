@@ -1,6 +1,5 @@
 export interface ITimeline {
   search?: string;
-  playlists: IPlaylists;
   children?: React.ReactNode;
 }
 

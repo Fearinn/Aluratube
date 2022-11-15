@@ -51,7 +51,7 @@ function Video() {
           ></iframe>
           <h1>{router.query.title}</h1>
         </section>
-        <Timeline playlists={playlists}></Timeline>
+        <Timeline></Timeline>
       </StyledVideo>
     </>
   );
