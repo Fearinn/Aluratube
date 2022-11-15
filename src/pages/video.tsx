@@ -19,6 +19,7 @@ const StyledVideo = styled.div`
     margin: 4rem 1rem 0 1rem;
     padding: 0.5rem;
     gap: 1rem;
+    transition: 0.4s all linear;
     @media (min-width: 900px) {
       max-width: 50%;
     }
