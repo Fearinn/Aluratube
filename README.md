@@ -1,7 +1,7 @@
 
 # AluraTube
 
-Project developed during the event **Imersão React 5** (11/07 - 11/14), from [Alura](https://www.alura.com.br). 
+Project developed during the event **Imersão React 5** (11/07/2022 - 11/14/2022), from [Alura](https://www.alura.com.br). 
 It's a video platform inspired by YouTube.
 
 
@@ -15,10 +15,11 @@ It's a video platform inspired by YouTube.
 ## Functionalities
 
 - List filter with search bar;
-- Dark mode;
+- Dark/light mode trasition.
 - Form to add new videos, with validation and thumbnail preview;
 - Page with embedded video and its playlist;
-- Realtime integration with Supabase.
+- Realtime integration with Supabase;
+- Duplicate videos and unexpected playlists prevented.
 
 
 ## Tech Stack
@@ -30,4 +31,3 @@ It's a video platform inspired by YouTube.
 - [ContextAPI](https://reactjs.org/docs/context.html);
 - [Material UI](https://mui.com/) (5.10.13);
 - [Supabase](https://supabase.com/) (1.35.7).
-
