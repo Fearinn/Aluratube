@@ -47,7 +47,7 @@ function VideoRegister() {
                 event.preventDefault();
 
                 try {
-                  await supabase.from("video").insert({
+                  const registration = await supabase.from("video").insert({
                     playlist: registerForm.values.playlist,
                     title: registerForm.values.title,
                     url: registerForm.values.url,
@@ -56,8 +56,13 @@ function VideoRegister() {
                     )}/hqdefault.jpg`,
                     youtubeId: getIdFromURL(registerForm.values.url),
                   });
+
+                  if (registration.error)
+                    throw new Error(
+                      ` este vídeo já está foi adiconado anteriormente. Você pode usar a barra de busca para encontrá-lo.`
+                    );
                 } catch (error) {
-                  alert(`Houve um problema ao cadastrar o vídeo: ${error}`);
+                  alert(`${error}`);
                 }
                 registerForm.resetForm();
                 setOpen(false);
