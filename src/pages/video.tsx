@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
-import config from "data/config.json";
+import config from "config/config.json";
 import styled from "styled-components";
 import Timeline from "components/Timeline";
 import { useContext } from "react";

@@ -1,7 +1,7 @@
 import { AppProps } from "next/app";
 import React, { useState } from "react";
 import { ThemeProvider } from "styled-components";
-import { lightTheme, darkTheme, GlobalStyles } from "data/themeConfig";
+import { lightTheme, darkTheme, GlobalStyles } from "config/themeConfig";
 import ColorMode from "providers/ColorModeContext";
 import Head from "next/head";
 import Menu from "components/Menu";

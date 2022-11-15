@@ -1,5 +1,5 @@
 
-import config from "data/config.json";
+import config from "config/config.json";
 import StyledFavorites from "./styles"
 
 function Favorites() {
