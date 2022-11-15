@@ -112,12 +112,6 @@ function Timeline({ search }: ITimeline) {
                 <h2>{playlistName}</h2>
                 <div className="videos">
                   {videos
-                    ?.filter(
-                      (video, index, array) =>
-                        array
-                          .map((mapVideo) => mapVideo.youtubeId)
-                          .indexOf(video.youtubeId) === index
-                    )
                     ?.filter((video) => {
                       const normalizedTitle = video.title.toLowerCase();
                       if (search) {
