@@ -5,7 +5,6 @@ import { useRouter } from "next/router";
 import PlaylistsContext from "providers/PlaylistsContext";
 import { useContext, useEffect } from "react";
 import videoService from "services/video";
-import getIdFromURL from "utils/getIdFromURL";
 import StyledTimeline from "./styles";
 
 const PROJECT_URL = "https://szaruafpiauzxitymguy.supabase.co";
@@ -22,7 +21,7 @@ function Timeline({ search }: ITimeline) {
   const playlistNames = Object.keys(playlists);
   const router = useRouter();
 
-  function updateVideos() {
+ function updateVideos() {
     service.getAllVideos().then((resposta) => {
       const novasPlaylists = {} as IPlaylists;
 
@@ -72,21 +71,21 @@ function Timeline({ search }: ITimeline) {
         <h2>{`Mais vídeos da playlist "${router.query.playlist}"`}</h2>
         <div className="videos">
           {videos
-            ?.filter((video) => getIdFromURL(video.url) !== router.query.id)
+            ?.filter((video) => video.youtubeId !== router.query.id)
             .map((video: IVideo) => {
               return (
                 <Link
                   href={{
                     pathname: `/video/`,
                     query: {
-                      id: getIdFromURL(video.url),
+                      id: video.youtubeId,
                       title: video.title.toUpperCase(),
                       playlist: possiblePlaylists.includes(video.playlist)
                         ? video.playlist
                         : "outros",
                     },
                   }}
-                  key={video.id}
+                  key={video.youtubeId}
                 >
                   <a>
                     <img src={video.thumb} alt="" />
@@ -116,8 +115,8 @@ function Timeline({ search }: ITimeline) {
                     ?.filter(
                       (video, index, array) =>
                         array
-                          .map((mapVideo) => mapVideo.url)
-                          .indexOf(video.url) === index
+                          .map((mapVideo) => mapVideo.youtubeId)
+                          .indexOf(video.youtubeId) === index
                     )
                     ?.filter((video) => {
                       const normalizedTitle = video.title.toLowerCase();
@@ -135,7 +134,7 @@ function Timeline({ search }: ITimeline) {
                           href={{
                             pathname: `/video/`,
                             query: {
-                              id: getIdFromURL(video.url),
+                              id: video.youtubeId,
                               title: video.title.toUpperCase(),
                               playlist: possiblePlaylists.includes(
                                 video.playlist
@@ -144,7 +143,7 @@ function Timeline({ search }: ITimeline) {
                                 : "outros",
                             },
                           }}
-                          key={video.id}
+                          key={video.youtubeId}
                         >
                           <a>
                             <img src={video.thumb} />

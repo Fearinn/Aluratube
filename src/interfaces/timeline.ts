@@ -15,5 +15,5 @@ export interface IVideo {
   url: string;
   playlist: string;
   thumb: string;
-  id: number;
+  youtubeId: string;
 }

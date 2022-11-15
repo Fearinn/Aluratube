@@ -32,9 +32,10 @@ const useForm = <T,>(initialValues: T) => {
 
 function VideoRegister() {
   const [open, setOpen] = useState(false);
-  const initialValues = { title: "", url: "", playlist: "" };
+  const initialValues = { title: "", url: "", playlist: "", youtubeId: "" };
 
   const registerForm = useForm(initialValues);
+
   return (
     <>
       <StyledRegisterVideo>
@@ -44,6 +45,7 @@ function VideoRegister() {
               aria-labelledby="legend"
               onSubmit={async (event) => {
                 event.preventDefault();
+
                 try {
                   await supabase.from("video").insert({
                     playlist: registerForm.values.playlist,
@@ -52,11 +54,11 @@ function VideoRegister() {
                     thumb: `https://img.youtube.com/vi/${getIdFromURL(
                       registerForm.values.url
                     )}/hqdefault.jpg`,
+                    youtubeId: getIdFromURL(registerForm.values.url),
                   });
-                } catch (e) {
-                  alert("Houve um problema ao cadastrar o vídeo:" + e);
+                } catch (error) {
+                  alert(`Houve um problema ao cadastrar o vídeo: ${error}`);
                 }
-
                 registerForm.resetForm();
                 setOpen(false);
               }}
@@ -80,7 +82,7 @@ function VideoRegister() {
                   />
 
                   <input
-                  pattern="((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-_]{11})(\S+)?"
+                    pattern="((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-_]{11})(\S+)?"
                     title="Uma URL válida contém determinada estrutura e um id com 11 caracteres"
                     placeholder="URL"
                     name="url"
@@ -101,7 +103,7 @@ function VideoRegister() {
                       label="Playlist"
                     >
                       <MenuItem value="jogos">Jogos</MenuItem>
-                      <MenuItem value="jecnologia">Tecnologia</MenuItem>
+                      <MenuItem value="tecnologia">Tecnologia</MenuItem>
                       <MenuItem value="esportes">Esportes</MenuItem>
                       <MenuItem value="outros">outros</MenuItem>
                     </Select>
