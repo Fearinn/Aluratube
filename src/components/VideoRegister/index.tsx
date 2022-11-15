@@ -59,7 +59,7 @@ function VideoRegister() {
 
                   if (registration.error)
                     throw new Error(
-                      ` este vídeo já está foi adiconado anteriormente. Você pode usar a barra de busca para encontrá-lo.`
+                      ` este vídeo já foi adiconado anteriormente. Você pode usar a barra de busca para encontrá-lo.`
                     );
                 } catch (error) {
                   alert(`${error}`);
@@ -110,7 +110,7 @@ function VideoRegister() {
                       <MenuItem value="jogos">Jogos</MenuItem>
                       <MenuItem value="tecnologia">Tecnologia</MenuItem>
                       <MenuItem value="esportes">Esportes</MenuItem>
-                      <MenuItem value="outros">outros</MenuItem>
+                      <MenuItem value="outros">Outros</MenuItem>
                     </Select>
                   </FormControl>
                 </fieldset>
