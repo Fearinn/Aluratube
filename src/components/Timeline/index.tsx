@@ -113,7 +113,13 @@ function Timeline({ search }: ITimeline) {
                 <h2>{playlistName}</h2>
                 <div className="videos">
                   {videos
-                    ?.filter((video: IVideo) => {
+                    ?.filter(
+                      (video, index, array) =>
+                        array
+                          .map((mapVideo) => mapVideo.url)
+                          .indexOf(video.url) === index
+                    )
+                    ?.filter((video) => {
                       const normalizedTitle = video.title.toLowerCase();
                       if (search) {
                         const normalizedSearch = search.toLowerCase();
@@ -122,7 +128,7 @@ function Timeline({ search }: ITimeline) {
                         return true;
                       }
                     })
-                    .map((video: IVideo) => {
+                    .map((video) => {
                       countVideos += 1;
                       return (
                         <Link
