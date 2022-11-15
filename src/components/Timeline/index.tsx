@@ -1,6 +1,7 @@
 import { IPlaylists, ITimeline, IVideo } from "interfaces/timeline";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { possiblePlaylists } from "pages";
 import getIdFromURL from "utils/getIdFromURL";
 import StyledTimeline from "./styles";
 
@@ -27,7 +28,9 @@ function Timeline({ search, playlists }: ITimeline) {
                     query: {
                       id: getIdFromURL(video.url),
                       title: video.title.toUpperCase(),
-                      playlist: video.playlist,
+                      playlist: possiblePlaylists.includes(video.playlist)
+                        ? video.playlist
+                        : "outros",
                     },
                   }}
                   key={video.id}
@@ -43,6 +46,7 @@ function Timeline({ search, playlists }: ITimeline) {
       </section>
     );
   }
+
   return (
     <StyledTimeline>
       {!router.query.playlist
@@ -74,7 +78,11 @@ function Timeline({ search, playlists }: ITimeline) {
                             query: {
                               id: getIdFromURL(video.url),
                               title: video.title.toUpperCase(),
-                              playlist: video.playlist,
+                              playlist: possiblePlaylists.includes(
+                                video.playlist
+                              )
+                                ? video.playlist
+                                : "outros",
                             },
                           }}
                           key={video.id}

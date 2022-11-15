@@ -14,6 +14,8 @@ const PUBLIC_KEY =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN6YXJ1YWZwaWF1enhpdHltZ3V5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2NjgyMjE4NDgsImV4cCI6MTk4Mzc5Nzg0OH0.t0Bfs0pKt2LtGwQb5BE9AB7OoK8hWkdsNs5wqvzHSak";
 const supabase = createClient(PROJECT_URL, PUBLIC_KEY);
 
+export const possiblePlaylists = ["jogos", "esportes", "tecnologia", "outros"]
+
 function HomePage() {
   const { playlists, setPlaylists } = useContext(PlaylistsContext);
   const { search } = useContext(SearchContext);
@@ -22,7 +24,6 @@ function HomePage() {
   function updateVideos() {
     service.getAllVideos().then((resposta) => {
       const novasPlaylists = {} as IPlaylists;
-      const possiblePlaylists = ["jogos", "esportes", "tecnologia", "outros"];
 
       resposta.data?.forEach((video) => {
         const playlist = video.playlist as keyof IPlaylists;
