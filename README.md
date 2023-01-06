@@ -1,18 +1,18 @@
 
-# AluraTube
+# 📼 AluraTube
 
 Project developed during the event **Imersão React 5** (11/07/2022 - 11/14/2022), from [Alura](https://www.alura.com.br). 
 It's a video platform inspired by YouTube.
 
 
-## Instructors
+## 👨‍🏫 Instructors
 
 - [Mario Souto](https://github.com/omariosouto);
 - [Nayanne Lopes](https://github.com/NayanneBatista);
 - [Paulo Silveira](https://github.com/peas).
 
 
-## Functionalities
+## ⚙️ Features
 
 - List filter with search bar;
 - Dark/light mode trasition.
@@ -22,7 +22,7 @@ It's a video platform inspired by YouTube.
 - Duplicate videos and unexpected playlists prevented.
 
 
-## Tech Stack
+## 👨‍💻 Tech Stack
 
 - [React](https://reactjs.org/) (18.2.0);
 - [NextJS](https://nextjs.org/) (12.3.1);
@@ -32,6 +32,6 @@ It's a video platform inspired by YouTube.
 - [Material UI](https://mui.com/) (5.10.13);
 - [Supabase](https://supabase.com/) (1.35.7).
 
-## Warning
+## 🚨 Warning
 
 Free Supabase plan pauses projects after some time of inactivity. If you can't see or manipulate any playlist, that is probably the case.
