@@ -31,3 +31,7 @@ It's a video platform inspired by YouTube.
 - [ContextAPI](https://reactjs.org/docs/context.html);
 - [Material UI](https://mui.com/) (5.10.13);
 - [Supabase](https://supabase.com/) (1.35.7).
+
+## Warning
+
+Free Supabase plan pauses projects after some time of inactivity. If you can't see or manipulate any playlist, that is probably the case.
