@@ -8,6 +8,8 @@ import StyledTimeline from "./styles";
 
 export const possiblePlaylists = ["jogos", "esportes", "tecnologia", "outros"];
 
+let alreadyMounted = false;
+
 const service = videoService();
 
 function isPlaylist(playlist: unknown[] | IVideo[]): playlist is IVideo[] {
@@ -22,51 +24,67 @@ function Timeline({ search }: ITimeline) {
   function updateVideos() {
     service.getAllVideos().then((resposta) => {
       const novasPlaylists: IPlaylists = {};
-      
-      console.log(resposta.data);
 
-      if (resposta.data && !isPlaylist(resposta.data)) return;
+      if (!resposta.data || !isPlaylist(resposta.data)) return;
 
-      resposta.data?.forEach((video) => {
-        const playlist = video.playlist as keyof IPlaylists;
+      resposta.data.forEach((video) => {
+        const nomeDaPlaylist = video.playlist as keyof IPlaylists;
 
-        if (!novasPlaylists[playlist] && possiblePlaylists.includes(playlist)) {
-          novasPlaylists[playlist] = [];
-          novasPlaylists[playlist] = [
+        if (
+          novasPlaylists[nomeDaPlaylist] &&
+          !isPlaylist(novasPlaylists[nomeDaPlaylist]!)
+        )
+          return;
+
+        if (
+          !novasPlaylists[nomeDaPlaylist] &&
+          possiblePlaylists.includes(nomeDaPlaylist) &&
+          !novasPlaylists[nomeDaPlaylist]
+        ) {
+          novasPlaylists[nomeDaPlaylist] = [video];
+          return;
+        }
+
+        if (
+          !novasPlaylists[nomeDaPlaylist] &&
+          novasPlaylists["outros"] &&
+          !novasPlaylists["outros"].includes(video)
+        ) {
+          novasPlaylists["outros"] = [video, ...novasPlaylists["outros"]];
+          return;
+        }
+
+        if (
+          novasPlaylists[nomeDaPlaylist] &&
+          !novasPlaylists[nomeDaPlaylist]?.includes(video)
+        ) {
+          novasPlaylists[nomeDaPlaylist] = [
             video,
-            ...(novasPlaylists[playlist] as IVideo[]),
-          ];
-        } else if (!novasPlaylists[playlist] && novasPlaylists["outros"]) {
-          novasPlaylists["outros"] = [
-            video,
-            ...(novasPlaylists["outros"] as IVideo[]),
-          ];
-        } else if (novasPlaylists[playlist]) {
-          novasPlaylists[playlist] = [
-            video,
-            ...(novasPlaylists[playlist] as IVideo[]),
+            ...novasPlaylists[nomeDaPlaylist]!,
           ];
         }
       });
+
       setPlaylists(novasPlaylists);
     });
   }
 
   useEffect(() => {
-    updateVideos();
     supabase
       .from("video")
       .on("*", () => updateVideos())
       .subscribe();
+
+    if (alreadyMounted) return;
+    alreadyMounted = true;
+    updateVideos();
   }, []);
 
   function renderSinglePlaylist() {
     const videos = playlists[router.query.playlist as keyof IPlaylists];
+    if (typeof router.query.playlist !== "string") return <></>
     return (
-      <section
-        id={router.query.playlist as string}
-        key={router.query.playlist as string}
-      >
+      <section id={router.query.playlist} key={router.query.playlist}>
         <h2>{`Mais vídeos da playlist "${router.query.playlist}"`}</h2>
         <div className="videos">
           {videos
@@ -103,9 +121,7 @@ function Timeline({ search }: ITimeline) {
       {!router.query.playlist
         ? playlistNames.map((playlistName) => {
             let countVideos = 0;
-
             const videos = playlists[playlistName as keyof IPlaylists];
-
             return (
               <section id={playlistName} key={playlistName}>
                 <h2>{playlistName}</h2>
