@@ -6,19 +6,26 @@ import { useContext, useEffect } from "react";
 import videoService, { supabase } from "services/video";
 import StyledTimeline from "./styles";
 
-
 export const possiblePlaylists = ["jogos", "esportes", "tecnologia", "outros"];
 
 const service = videoService();
+
+function isPlaylist(playlist: unknown[] | IVideo[]): playlist is IVideo[] {
+  return (playlist[0] as IVideo).youtubeId !== undefined;
+}
 
 function Timeline({ search }: ITimeline) {
   const { playlists, setPlaylists } = useContext(PlaylistsContext);
   const playlistNames = Object.keys(playlists);
   const router = useRouter();
 
- function updateVideos() {
+  function updateVideos() {
     service.getAllVideos().then((resposta) => {
-      const novasPlaylists = {} as IPlaylists;
+      const novasPlaylists: IPlaylists = {};
+      
+      console.log(resposta.data);
+
+      if (resposta.data && !isPlaylist(resposta.data)) return;
 
       resposta.data?.forEach((video) => {
         const playlist = video.playlist as keyof IPlaylists;
@@ -46,14 +53,11 @@ function Timeline({ search }: ITimeline) {
   }
 
   useEffect(() => {
+    updateVideos();
     supabase
       .from("video")
       .on("*", () => updateVideos())
       .subscribe();
-  }, []);
-
-  useEffect(() => {
-    updateVideos();
   }, []);
 
   function renderSinglePlaylist() {
