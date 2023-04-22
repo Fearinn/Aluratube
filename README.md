@@ -4,7 +4,7 @@
 | :placard: Vitrine.Dev |     |
 | -------------  | --- |
 | :sparkles: Nome        | **AluraTube**
-| :label: Tecnologias | React, Next, Styled-Components, Supabase, Typescript, MAterial UI
+| :label: Tecnologias | React, Next, Styled-Components, Supabase, Typescript, Material UI
 | :rocket: URL         | https://imersao-react-aluratube-eight.vercel.app/
 
 Project developed during the event **Imersão React 5** (11/07/2022 - 11/14/2022), from [Alura](https://www.alura.com.br). 
