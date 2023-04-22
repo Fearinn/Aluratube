@@ -10,6 +10,8 @@
 Project developed during the event **Imersão React 5** (11/07/2022 - 11/14/2022), from [Alura](https://www.alura.com.br). 
 It's a video platform inspired by YouTube.
 
+![preview](https://user-images.githubusercontent.com/105985983/233788547-7608ce52-de10-4f78-9a72-63e0af443268.png#vitrinedev)
+
 ## ⚙️ Features
 
 - List filter with search bar;
